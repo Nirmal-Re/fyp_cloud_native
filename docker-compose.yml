@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  nginx:
+    build: ./nginx
+    constainer_name: cn_nginx
+    links:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+
+  frontend:
+    build: ./frontend
+    container_name: cn_frontend
+    ports:
+      - "3000:3000"
+
+  backend:
+    build: ./backend
+    container_name: cn_backend
+    ports:
+      - "5000:5000"
