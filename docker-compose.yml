@@ -3,21 +3,23 @@ version: '3.9'
 services:
   nginx:
     build: ./nginx
-    constainer_name: cn_nginx
-    links:
-      - frontend
-      - backend
+    container_name: cn_nginx
+    depends_on:
+      - dashboard
+      - habit
     ports:
       - "80:80"
 
-  frontend:
-    build: ./frontend
-    container_name: cn_frontend
+  dashboard:
+    build: ./backend/dashboard
+    container_name: cn_dashboard
     ports:
       - "3000:3000"
+    command: node dist/server.js
 
-  backend:
-    build: ./backend
-    container_name: cn_backend
-    ports:
-      - "5000:5000"
+  habit:
+    build: ./backend/habit
+    container_name: cn_habit
+    ports: 
+      - "4000:3000"
+    command: node dist/server.js
