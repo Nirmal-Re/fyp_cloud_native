@@ -6,7 +6,7 @@ services:
     container_name: cn_nginx
     depends_on:
       - dashboard
-      - habit
+      - logs
     ports:
       - "80:80"
 
@@ -17,9 +17,17 @@ services:
       - "3000:3000"
     command: node dist/server.js
 
-  habit:
-    build: ./backend/habit
-    container_name: cn_habit
+  logs:
+    build: ./backend/logs
+    container_name: ch_journal_logs
     ports: 
       - "4000:3000"
+    command: node dist/server.js
+  users:
+    build: ./backend/users
+    env_file:
+      - .env
+    container_name: cn_users
+    ports:
+      - "5000:3000"
     command: node dist/server.js
