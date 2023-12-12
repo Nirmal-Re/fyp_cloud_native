@@ -7,6 +7,7 @@ services:
     depends_on:
       - dashboard
       - logs
+      - users
     ports:
       - "80:80"
 
@@ -19,6 +20,8 @@ services:
 
   logs:
     build: ./backend/logs
+    env_file:
+      - .env
     container_name: ch_journal_logs
     ports: 
       - "4000:3000"

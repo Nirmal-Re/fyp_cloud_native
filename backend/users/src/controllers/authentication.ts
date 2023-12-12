@@ -41,6 +41,7 @@ import { access } from "fs";
 export const login = async (req: express.Request, res:express.Response) => { 
     try {
         const {email, password} = req.body;
+        console.log(email, password);
         if (!email || !password) {
             return res.status(400).send({error: "Missing fields"});
         }
