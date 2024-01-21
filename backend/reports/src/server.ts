@@ -9,7 +9,7 @@ import path from "path";
 
 import { ProtoGrpcType } from "./proto/logs";
 import router from "./router";
-import { logsServiceHandlers } from "./proto/logs/logsService";
+import { logsServiceHandlers } from "./proto/logsPackage/logsService";
 
 const GRPC_PORT = 8082;
 const PROTO_PATH = path.resolve(__dirname, "./proto/logs.proto");
@@ -36,7 +36,7 @@ grpcClient.waitForReady(deadline, (err) => {
 });
 
 function onClientReady() {
-  grpcClient.getReport({ id: "1" }, (err, res) => {
+  grpcClient.getReport({ uid: "20", start: 1, end: 2 }, (err, res) => {
     if (err) {
       console.error(err);
       return;

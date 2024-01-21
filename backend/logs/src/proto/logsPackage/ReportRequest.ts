@@ -2,9 +2,13 @@
 
 
 export interface ReportRequest {
-  'id'?: (string);
+  'uid'?: (string);
+  'start'?: (number);
+  'end'?: (number);
 }
 
 export interface ReportRequest__Output {
-  'id'?: (string);
+  'uid'?: (string);
+  'start'?: (number);
+  'end'?: (number);
 }

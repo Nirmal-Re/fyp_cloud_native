@@ -7,9 +7,19 @@ service logsService {
   }
 
   message ReportRequest {
-    string id = 1;
+
+    string uid = 1;
+    string start = 2;
+    string end= 3;
   }
 
   message ReportResponse {
-    string reportData = 1;
+    repeated Report report = 1;
   }
+  
+  message Report {
+    string uploadDateAndTime = 1;
+    int32 NoOfTrue = 2;
+    int32 NoOfFalse = 3;
+  }
+
