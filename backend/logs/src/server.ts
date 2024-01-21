@@ -52,7 +52,8 @@ function getServer() {
 
   server.addService(Logs.logsService.service, {
     getReport: (req, res) => {
-      console.log(req, res);
+      console.log("getReport", req.request);
+      res(null, { reportData: "reportData" });
     },
   } as logsServiceHandlers);
   return server;
