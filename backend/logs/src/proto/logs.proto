@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package logs;
+package logsPackage;
 
 service logsService {
     rpc getReport (ReportRequest) returns (ReportResponse) {}
@@ -13,3 +13,4 @@ service logsService {
   message ReportResponse {
     string reportData = 1;
   }
+

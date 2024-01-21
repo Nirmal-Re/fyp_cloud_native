@@ -18,7 +18,7 @@ const grpcObject = grpc.loadPackageDefinition(
   packageDefinition
 ) as unknown as ProtoGrpcType;
 
-const Logs = grpcObject.logs;
+const Logs = grpcObject.logsPackage;
 
 const app = express();
 app.use(express.json());

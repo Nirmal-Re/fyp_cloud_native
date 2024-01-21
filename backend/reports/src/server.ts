@@ -19,7 +19,7 @@ const grpcObject = grpc.loadPackageDefinition(
   packageDefinition
 ) as unknown as ProtoGrpcType;
 
-const grpcClient = new grpcObject.logs.logsService(
+const grpcClient = new grpcObject.logsPackage.logsService(
   `0.0.0.0:${GRPC_PORT}`,
   grpc.credentials.createInsecure()
 );
