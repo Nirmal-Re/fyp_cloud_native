@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package logs;
+
+service logsService {
+    rpc getReport (ReportRequest) returns (ReportResponse) {}
+  }
+
+  message ReportRequest {
+    string id = 1;
+  }
+
+  message ReportResponse {
+    string reportData = 1;
+  }
