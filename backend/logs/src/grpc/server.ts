@@ -1,15 +1,14 @@
 import * as grpc from "@grpc/grpc-js";
 import * as protoLoader from "@grpc/proto-loader";
+
 import path from "path";
 
-import { getHabitStats } from "./model/logs";
-import { ProtoGrpcType } from "./proto/logs";
-import { logsServiceHandlers } from "./proto/logsPackage/logsService";
-import { ReportResponse } from "./proto/logsPackage/ReportResponse";
-import { Report } from "./proto/logsPackage/Report";
+import { getHabitStats } from "../model/logs";
+import { ProtoGrpcType } from "../proto/logs";
+import { logsServiceHandlers } from "../proto/logsPackage/logsService";
 
 const GRPC_PORT = 8082;
-const PROTO_PATH = path.resolve(__dirname, "./proto/logs.proto");
+const PROTO_PATH = path.resolve(__dirname, "../proto/logs.proto");
 
 const packageDefinition = protoLoader.loadSync(PROTO_PATH);
 const grpcObject = grpc.loadPackageDefinition(

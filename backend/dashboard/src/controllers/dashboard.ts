@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
 import grpcClient from "../grpc/client";
 
+import { ReportResponse } from "../proto/logsPackage/ReportResponse";
+
 export const getUserReportData = async (req: Request, res: Response) => {
   try {
     const { uid } = req.body;
@@ -10,7 +12,8 @@ export const getUserReportData = async (req: Request, res: Response) => {
         console.error(err);
         return;
       }
-      return res.status(200).send({ response });
+      const { report } = response as ReportResponse;
+      return res.status(200).send(report);
     });
   } catch (e) {
     console.log("Error with adding daily log", e);
