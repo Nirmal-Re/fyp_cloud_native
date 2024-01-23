@@ -1,0 +1,178 @@
+failed to get console mode for stdout: The handle is invalid.
+#0 building with "default" instance using docker driver
+
+#1 [users internal] load .dockerignore
+#1 transferring context: 32B
+#1 transferring context: 60B 0.0s done
+#1 DONE 0.1s
+
+#2 [logs internal] load .dockerignore
+#2 transferring context: 60B 0.0s done
+#2 DONE 0.1s
+
+#3 [logs internal] load build definition from Dockerfile
+#3 transferring dockerfile: 480B 0.1s done
+#3 DONE 0.2s
+
+#4 [users internal] load build definition from Dockerfile
+#4 transferring dockerfile: 446B 0.0s done
+#4 DONE 0.1s
+
+#5 [users internal] load metadata for docker.io/library/node:16-alpine
+#5 DONE 1.2s
+
+#6 [users development 1/7] FROM docker.io/library/node:16-alpine@sha256:a1f9d027912b58a7c75be7716c97cfbc6d3099f3a97ed84aa490be9dee20e787
+#6 DONE 0.0s
+
+#7 [users internal] load build context
+#7 transferring context: 868B 0.0s done
+#7 DONE 0.1s
+
+#8 [logs internal] load build context
+#8 transferring context: 1.20kB 0.0s done
+#8 DONE 0.1s
+
+#9 [logs development 3/7] COPY proto-gen.sh .
+#9 CACHED
+
+#10 [logs development 6/7] COPY . .
+#10 CACHED
+
+#11 [logs production 5/6] RUN npm ci --only=production
+#11 CACHED
+
+#12 [logs development 4/7] COPY package*.json .
+#12 CACHED
+
+#13 [logs development 5/7] RUN npm install
+#13 CACHED
+
+#14 [logs development 7/7] RUN  npm run build
+#14 CACHED
+
+#15 [logs production 6/6] COPY --from=development /app/dist ./dist
+#15 CACHED
+
+#16 [logs] exporting to image
+#16 exporting layers done
+#16 writing image sha256:7bed1114b6173dd0a889c9aa6c1de5871357d59163b55738be96d193e5e60e0b done
+#16 naming to docker.io/library/fyp_cloud_native-logs 0.0s done
+#16 DONE 0.0s
+
+#17 [users production 5/6] RUN npm ci --only=production
+#17 CACHED
+
+#18 [users production 3/6] RUN ls
+#18 CACHED
+
+#19 [users development 3/6] COPY package*.json .
+#19 CACHED
+
+#20 [users development 5/6] COPY . .
+#20 CACHED
+
+#21 [users development 2/7] WORKDIR /app
+#21 CACHED
+
+#22 [users development 6/6] RUN  npm run build
+#22 CACHED
+
+#23 [users development 4/6] RUN npm install
+#23 CACHED
+
+#24 [users production 4/6] COPY package*.json .
+#24 CACHED
+
+#25 [users production 6/6] COPY --from=development /app/dist ./dist
+#25 CACHED
+
+#26 [users] exporting to image
+#26 exporting layers done
+#26 writing image sha256:594a428760c54f6b9ba20f194ce0500539528948b5ae1b49ce33089ade6f3f1b 0.0s done
+#26 naming to docker.io/library/fyp_cloud_native-users
+#26 naming to docker.io/library/fyp_cloud_native-users 0.0s done
+#26 DONE 0.0s
+
+#27 [dashboard internal] load build definition from Dockerfile
+#27 transferring dockerfile: 482B done
+#27 DONE 0.0s
+
+#28 [dashboard internal] load .dockerignore
+#28 transferring context: 60B done
+#28 DONE 0.0s
+
+#5 [dashboard internal] load metadata for docker.io/library/node:16-alpine
+#5 DONE 1.6s
+
+#6 [dashboard development 1/7] FROM docker.io/library/node:16-alpine@sha256:a1f9d027912b58a7c75be7716c97cfbc6d3099f3a97ed84aa490be9dee20e787
+#6 DONE 0.0s
+
+#29 [dashboard internal] load build context
+#29 transferring context: 2.94kB 0.0s done
+#29 DONE 0.0s
+
+#30 [dashboard development 4/7] COPY package*.json .
+#30 CACHED
+
+#21 [dashboard development 2/7] WORKDIR /app
+#21 CACHED
+
+#31 [dashboard development 3/7] COPY proto-gen.sh .
+#31 CACHED
+
+#32 [dashboard development 5/7] RUN npm install
+#32 CACHED
+
+#33 [dashboard development 6/7] COPY . .
+#33 DONE 0.1s
+
+#34 [dashboard development 7/7] RUN  npm run build
+#34 1.328 
+#34 1.328 > logs@1.0.0 build
+#34 1.328 > ./proto-gen.sh && rimraf ./dist && tsc && npm run copy-proto
+#34 1.328 
+#34 7.955 
+#34 7.955 > logs@1.0.0 copy-proto
+#34 7.955 > cp ./src/proto/logs.proto ./dist/proto
+#34 7.955 
+#34 DONE 8.0s
+
+#35 [dashboard production 5/6] RUN npm ci --only=production
+#35 CACHED
+
+#36 [dashboard production 6/6] COPY --from=development /app/dist ./dist
+#36 DONE 0.1s
+
+#37 [dashboard] exporting to image
+#37 exporting layers 0.1s done
+#37 writing image sha256:872842da7bd08496b9921a48180b2beccecf9293a0919b851ecd54cba82068a7 done
+#37 naming to docker.io/library/fyp_cloud_native-dashboard 0.0s done
+#37 DONE 0.1s
+
+#38 [nginx internal] load .dockerignore
+#38 transferring context:
+#38 transferring context: 2B done
+#38 DONE 0.0s
+
+#39 [nginx internal] load build definition from Dockerfile
+#39 transferring dockerfile: 144B 0.0s done
+#39 DONE 0.0s
+
+#40 [nginx internal] load metadata for docker.io/library/nginx:latest
+#40 DONE 1.3s
+
+#41 [nginx 1/2] FROM docker.io/library/nginx@sha256:4c0fdaa8b6341bfdeca5f18f7837462c80cff90527ee35ef185571e1c327beac
+#41 DONE 0.0s
+
+#42 [nginx internal] load build context
+#42 transferring context: 32B done
+#42 DONE 0.0s
+
+#43 [nginx 2/2] COPY nginx.conf /etc/nginx/nginx.conf
+#43 CACHED
+
+#44 [nginx] exporting to image
+#44 exporting layers done
+#44 writing image sha256:1aa0f572b05f68bde7f9587c119c182f985605052a672e20185e941655975584 done
+#44 naming to docker.io/library/fyp_cloud_native-nginx done
+#44 DONE 0.0s

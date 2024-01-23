@@ -17,6 +17,6 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/dashboard", router());
-app.listen(3001, () => {
-  console.log("Server is running on http://localhost:3001/");
+app.listen(3000, () => {
+  console.log("Server is running on http://localhost:3000/");
 });

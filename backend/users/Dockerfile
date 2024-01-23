@@ -25,4 +25,4 @@ RUN npm ci --only=production
 
 COPY --from=development /app/dist ./dist
 
-CMD ["sudo","node", "dist/server.js"]
+CMD ["npm start"]

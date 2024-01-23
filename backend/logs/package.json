@@ -1,13 +1,12 @@
 {
-  "name": "logs",
+  "name": "dashboard",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "tsc && nodemon dist/server.js",
-    "build": "rimraf ./dist && tsc",
     "copy-proto": "cp ./src/proto/logs.proto ./dist/proto",
-    "prestart": "bash ./proto-gen.sh && npm run build && npm run copy-proto",
+    "build": "./proto-gen.sh && rimraf ./dist && tsc && npm run copy-proto",
+    "dev": "npm run build && nodemon dist/server.js",
     "start": "node dist/server.js"
   },
   "keywords": [],

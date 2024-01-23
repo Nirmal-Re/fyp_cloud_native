@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   nginx:
@@ -14,18 +14,23 @@ services:
   dashboard:
     build: ./backend/dashboard
     container_name: cn_dashboard
+    env_file:
+      - .env
     ports:
       - "3000:3000"
     command: node dist/server.js
+    depends_on:
+      - logs
 
   logs:
     build: ./backend/logs
     env_file:
       - .env
     container_name: ch_journal_logs
-    ports: 
+    ports:
       - "4000:3000"
     command: node dist/server.js
+
   users:
     build: ./backend/users
     env_file:
