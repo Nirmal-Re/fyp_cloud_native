@@ -5,6 +5,8 @@ import path from "path";
 import { getHabitStats } from "./model/logs";
 import { ProtoGrpcType } from "./proto/logs";
 import { logsServiceHandlers } from "./proto/logsPackage/logsService";
+import { ReportResponse } from "./proto/logsPackage/ReportResponse";
+import { Report } from "./proto/logsPackage/Report";
 
 const GRPC_PORT = 8082;
 const PROTO_PATH = path.resolve(__dirname, "./proto/logs.proto");
@@ -37,8 +39,8 @@ function getServer() {
   server.addService(Logs.logsService.service, {
     getReport: async (req, res) => {
       const { uid = "", start = 0, end = 0 } = req.request;
-      const result = (await getHabitStats(uid, start, end)) as any; //Need to do some type fixing here
-      res(null, result);
+      const result = await getHabitStats(uid, start, end); //Need to do some type fixing here
+      res(null, { report: result });
     },
   } as logsServiceHandlers);
   return server;

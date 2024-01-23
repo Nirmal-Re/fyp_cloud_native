@@ -1,10 +1,10 @@
 import { Router } from "express";
 
-import report from "./report";
+import dashboard from "./dashboard";
 
 const router = Router();
 
 export default (): Router => {
-  report(router);
+  dashboard(router);
   return router;
 };
