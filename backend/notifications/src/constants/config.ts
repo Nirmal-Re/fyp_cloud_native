@@ -19,14 +19,23 @@ interface JWT_Interface {
 // SQL DB values
 const { JWT_ACCESS_TOKEN_SECRET, JWT_REFRESH_TOKEN_SECRET } = process.env;
 // Mongo DB values
-const { MONGO_DB_HOST, MONGO_DB_USER, MONGO_DB_PASSWORD, MONGO_DB_NAME } =
-  process.env;
+const {
+  MONGO_DB_HOST,
+  MONGO_DB_USER,
+  MONGO_DB_PASSWORD,
+  MONGO_DB_NAME,
+  NODE_ENV,
+} = process.env;
+
 if (!MONGO_DB_HOST || !MONGO_DB_USER || !MONGO_DB_PASSWORD || !MONGO_DB_NAME) {
   throw new Error("Mongo database connection values are not defined");
 }
 
 export const DB_mongo: DB_Interface = {
-  host: MONGO_DB_HOST,
+  host:
+    NODE_ENV === "production"
+      ? "mongodb://host.docker.internal:27017"
+      : MONGO_DB_HOST,
   user: MONGO_DB_USER,
   password: MONGO_DB_PASSWORD,
   database: MONGO_DB_NAME,

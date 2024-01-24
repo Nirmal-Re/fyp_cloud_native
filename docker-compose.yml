@@ -46,7 +46,7 @@ services:
       - .env
     container_name: cn_notifications
     ports:
-      - "5000:3000"
+      - "6000:3000"
     command: node dist/server.js
     depends_on:
       - logs

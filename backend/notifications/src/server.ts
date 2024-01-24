@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 
+import "./model/mongoDB";
 import router from "./router";
 import "./cron_job/notification";
 

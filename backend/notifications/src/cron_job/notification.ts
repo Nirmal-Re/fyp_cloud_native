@@ -7,6 +7,7 @@ import {
 
 import grpcClient from "../grpc/client";
 import { uidResponse } from "../proto/logsPackage/uidResponse";
+import { mongoDbConnect } from "../model/mongoDB";
 
 interface Notification {
   uid: Number;
@@ -23,6 +24,7 @@ cron.schedule("59 * * * * *", async () => {
   console.log("Generating notifications...");
   // Get all users
   // const users = await getTodaysUids(); //TODO Need to get it from logs
+  await mongoDbConnect();
   grpcClient.getUid({}, (err, response) => {
     if (err) {
       console.error(err);

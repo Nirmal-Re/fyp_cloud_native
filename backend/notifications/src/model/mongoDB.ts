@@ -4,7 +4,7 @@ import { DB_mongo } from "../constants/config";
 
 let conn: Db;
 
-const mongoDbConnect = async () => {
+export const mongoDbConnect = async () => {
   try {
     const client = new MongoClient(DB_mongo.host);
     await client.connect();
