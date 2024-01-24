@@ -3,7 +3,7 @@ import * as protoLoader from "@grpc/proto-loader";
 
 import path from "path";
 
-import { getHabitStats } from "../model/logs";
+import { getHabitStats, getTodaysUids } from "../model/logs";
 import { ProtoGrpcType } from "../proto/logs";
 import { logsServiceHandlers } from "../proto/logsPackage/logsService";
 
@@ -40,6 +40,10 @@ function getServer() {
       const { uid = "", start = 0, end = 0 } = req.request;
       const result = await getHabitStats(uid, start, end); //Need to do some type fixing here
       res(null, { report: result });
+    },
+    getUid: async (req, res) => {
+      const result = await getTodaysUids();
+      res(null, { uid: result });
     },
   } as logsServiceHandlers);
   return server;

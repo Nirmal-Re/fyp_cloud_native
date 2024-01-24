@@ -134,3 +134,14 @@ export const getHabitStats = async (
   const result = await m_runAggregation("coll_logs", pipeline);
   return result;
 };
+
+export const getTodaysUids = async () => {
+  const [startOfDay, endOfDay] = startAndEndOfDay();
+  const pipeline = [
+    { $match: { uploadDateAndTime: { $gte: startOfDay, $lte: endOfDay } } },
+    { $project: { _id: 0, uid: "$uid" } },
+  ];
+  const result = await m_runAggregation("coll_logs", pipeline);
+  const uids = result.map((item) => item.uid);
+  return uids;
+};

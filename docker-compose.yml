@@ -39,3 +39,14 @@ services:
     ports:
       - "5000:3000"
     command: node dist/server.js
+
+  notifications:
+    build: ./backend/notifications
+    env_file:
+      - .env
+    container_name: cn_notifications
+    ports:
+      - "5000:3000"
+    command: node dist/server.js
+    depends_on:
+      - logs

@@ -1,4 +1,4 @@
-failed to get console mode for stdout: The handle is invalid.
+git failed to get console mode for stdout: The handle is invalid.
 #0 building with "default" instance using docker driver
 
 #1 [users internal] load .dockerignore
