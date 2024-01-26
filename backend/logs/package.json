@@ -6,7 +6,8 @@
   "scripts": {
     "copy-proto": "cp ./src/proto/logs.proto ./dist/proto",
     "build": "./proto-gen.sh && rimraf ./dist && tsc && npm run copy-proto",
-    "dev": "npm run build && nodemon dist/server.js",
+    "dev-build": "bash ./proto-gen.sh && rimraf ./dist && tsc && npm run copy-proto",
+    "dev": "npm run dev-build && nodemon dist/server.js",
     "start": "node dist/server.js"
   },
   "keywords": [],

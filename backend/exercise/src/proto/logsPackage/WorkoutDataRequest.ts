@@ -3,12 +3,12 @@
 
 export interface WorkoutDataRequest {
   'uid'?: (string);
-  'start'?: (number);
-  'end'?: (number);
+  'start'?: (string);
+  'end'?: (string);
 }
 
 export interface WorkoutDataRequest__Output {
   'uid'?: (string);
-  'start'?: (number);
-  'end'?: (number);
+  'start'?: (string);
+  'end'?: (string);
 }

@@ -30,14 +30,17 @@ export const getWorkoutHistoricData = async (req: Request, res: Response) => {
       console.log(startDate, endDate);
       return res.status(400).send({ error: "Invalid dates" });
     }
-    grpcExerciseClient.getWorkoutData({ uid, start, end }, (err, response) => {
-      if (err) {
-        console.error(err);
-        return;
+    grpcExerciseClient.getWorkoutData(
+      { uid, start: String(startDate), end: String(endDate) },
+      (err, response) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        const workoutData = response;
+        return res.status(200).send(workoutData);
       }
-      const workoutData = response;
-      return res.status(200).send(workoutData);
-    });
+    );
   } catch (e: unknown) {
     console.error(e);
     if (e instanceof Error) res.status(400).send({ error: e.message });

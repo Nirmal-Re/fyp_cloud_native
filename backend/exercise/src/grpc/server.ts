@@ -44,6 +44,7 @@ function getServer() {
         startDate,
         endDate
       );
+      console.log("Exercise Server", result);
       res(null, result);
     },
     getReport: () => {

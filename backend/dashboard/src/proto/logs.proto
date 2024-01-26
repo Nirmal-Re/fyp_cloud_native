@@ -33,13 +33,13 @@ service logsService {
 
   message WorkoutDataRequest {
     string uid = 1;
-    int32 start = 2;
-    int32 end = 3;
+    string start = 2;
+    string end = 3;
   } 
 
   message workoutType {
     repeated string uploadDateAndTime = 1;
-    repeated int32 averageForEachDay = 2;
+    repeated float averageForEachDay = 2;
   }
 
   message WorkoutDataResponse {

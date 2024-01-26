@@ -45,6 +45,9 @@ function getServer() {
       const result = await getTodaysUids();
       res(null, { uid: result });
     },
+    getWorkoutData: () => {
+      throw new Error("getReport not implemented");
+    },
   } as logsServiceHandlers);
   return server;
 }
