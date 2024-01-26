@@ -3,19 +3,18 @@
 # dependencies
 backend/dashboard/node_modules
 backend/logs/node_modules
-backend/reports/node_modules
 backend/users/node_modules
 backend/notifications/node_modules
+backend/exercise/node_modules
+
 
 backend/dashboard/dist
 backend/logs/dist
 backend/reports/dist
 backend/users/dist
 backend/notifications/dist
+backend/exercise/dist
 
-
-# production
-frontend/build
 
 # misc
 .DS_Store

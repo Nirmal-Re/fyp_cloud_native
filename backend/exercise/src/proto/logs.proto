@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package logsPackage;
+
+service logsService {
+    rpc getReport (ReportRequest) returns (ReportResponse) {}
+    rpc getUid (uidRequest) returns (uidResponse) {}
+  }
+
+  message ReportRequest {
+    string uid = 1;
+    int32 start = 2;
+    int32 end = 3;
+  }
+
+  message ReportResponse {
+    repeated Report report = 1;
+  }
+  
+  message Report {
+    string uploadDateAndTime = 1;
+    int32 NoOfTrue = 2;
+    int32 NoOfFalse = 3;
+  }
+
+  message uidRequest {
+  }
+
+  message uidResponse {
+    repeated int32 uid = 1;
+  }
