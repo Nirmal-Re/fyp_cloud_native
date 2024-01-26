@@ -6,16 +6,23 @@ import { ReportResponse } from "../proto/logsPackage/ReportResponse";
 
 export const getUserReportData = async (req: Request, res: Response) => {
   try {
-    const { uid } = req.body;
-    // const stats = await getHabitStats(uid);
-    grpcLogClient.getReport({ uid, start: 1, end: 2 }, (err, response) => {
-      if (err) {
-        console.error(err);
-        return;
+    const { uid, start, end } = req.body;
+    const [startDate, endDate] = convertDates(start, end);
+    if (!validDates(startDate, endDate)) {
+      console.log(startDate, endDate);
+      return res.status(400).send({ error: "Invalid dates" });
+    }
+    grpcLogClient.getReport(
+      { uid, start: String(startDate), end: String(startDate) },
+      (err, response) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        const { report } = response as ReportResponse;
+        return res.status(200).send(report);
       }
-      const { report } = response as ReportResponse;
-      return res.status(200).send(report);
-    });
+    );
   } catch (e) {
     console.log("Error with adding daily log", e);
     res.status(400).send({ error: "Error with adding daily log" });

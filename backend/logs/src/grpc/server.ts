@@ -37,8 +37,9 @@ function getServer() {
 
   server.addService(Logs.logsService.service, {
     getReport: async (req, res) => {
-      const { uid = "", start = 0, end = 0 } = req.request;
-      const result = await getHabitStats(uid, start, end); //Need to do some type fixing here
+      const { uid = "", start = "", end = "" } = req.request;
+      const [startDate, endDate] = [new Date(start), new Date(end)];
+      const result = await getHabitStats(uid, startDate, endDate); //Need to do some type fixing here
       res(null, { report: result });
     },
     getUid: async (req, res) => {

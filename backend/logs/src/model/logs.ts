@@ -100,13 +100,14 @@ export const deleteLog = async (id: string) => {
   return await m_deleteOne("coll_logs", { id });
 };
 
-export const getHabitStats = async (
-  userId: string,
-  start: Number,
-  end: Number
-) => {
+export const getHabitStats = async (userId: string, start: Date, end: Date) => {
   const pipeline = [
-    { $match: { uid: Number(userId) } },
+    {
+      $match: {
+        uid: Number(userId),
+        uploadDateAndTime: { $gte: start, $lte: end },
+      },
+    },
     { $sort: { uploadDateAndTime: 1 } },
     {
       $project: {

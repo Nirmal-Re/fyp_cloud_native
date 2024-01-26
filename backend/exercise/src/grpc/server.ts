@@ -37,7 +37,7 @@ function getServer() {
 
   server.addService(Logs.logsService.service, {
     getWorkoutData: async (req, res) => {
-      const { uid = "", start = 0, end = 0 } = req.request;
+      const { uid = "", start = "", end = "" } = req.request;
       const [startDate, endDate] = [new Date(start), new Date(end)];
       const result = await getHistoryWorkoutData(
         Number(uid),
