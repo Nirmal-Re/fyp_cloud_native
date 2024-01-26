@@ -19,7 +19,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/notifications", router());
+app.use("/", router());
 
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000/");

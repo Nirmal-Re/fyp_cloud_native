@@ -19,18 +19,6 @@ export const deleteUser = async (req: express.Request, res: express.Response) =>
 };
 
 
-export const updateUser = async (req: express.Request, res: express.Response) => {
-    try {
-        // get user id from req.params
-        // get updated fields from req.body
-        // update user in database
-        // return status 200
-    } catch (e) {   
-        console.log(e);
-        res.status(500).send({error: "Error updating user"});
-    }
-};
-
 export const changePassword = async (req: express.Request, res: express.Response) => {
     try {
     const {newPassword, uid} = req.body;

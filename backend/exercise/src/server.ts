@@ -17,7 +17,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/exercise", router());
+app.use("/", router());
 
 main();
 
