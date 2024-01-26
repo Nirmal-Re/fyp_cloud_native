@@ -133,6 +133,7 @@ export const getHabitStats = async (userId: string, start: Date, end: Date) => {
     },
   ];
   const result = await m_runAggregation("coll_logs", pipeline);
+  console.log(result);
   return result;
 };
 
