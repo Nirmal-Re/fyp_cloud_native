@@ -5,6 +5,7 @@ package logsPackage;
 service logsService {
     rpc getReport (ReportRequest) returns (ReportResponse) {}
     rpc getUid (uidRequest) returns (uidResponse) {}
+    rpc getWorkoutData (WorkoutDataRequest) returns (WorkoutDataResponse) {}
   }
 
   message ReportRequest {
@@ -28,4 +29,22 @@ service logsService {
 
   message uidResponse {
     repeated int32 uid = 1;
+  }
+
+  message WorkoutDataRequest {
+    string uid = 1;
+    int32 start = 2;
+    int32 end = 3;
+  } 
+
+  message workoutType {
+    repeated string uploadDateAndTime = 1;
+    repeated int32 averageForEachDay = 2;
+  }
+
+  message WorkoutDataResponse {
+    workoutType push = 1;
+    workoutType pull = 2;
+    workoutType legs = 3;
+    workoutType cardio = 4;
   }

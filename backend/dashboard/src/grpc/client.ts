@@ -16,14 +16,20 @@ const grpcObject = grpc.loadPackageDefinition(
 ) as unknown as ProtoGrpcType;
 
 const LOG_SERVER_ID = process.env.LOG_SERVER_ID || "0.0.0.0";
-const grpcClient = new grpcObject.logsPackage.logsService(
+const grpcLogClient = new grpcObject.logsPackage.logsService(
   `${LOG_SERVER_ID}:${GRPC_PORT}`,
+  grpc.credentials.createInsecure()
+);
+
+const EXERCISE_SERVER_ID = process.env.EXERCISE_SERVER_ID || "0.0.0.0";
+const grpcExerciseClient = new grpcObject.logsPackage.logsService(
+  `${EXERCISE_SERVER_ID}:${GRPC_PORT}`,
   grpc.credentials.createInsecure()
 );
 
 // const deadline = new Date();
 // deadline.setSeconds(deadline.getSeconds() + 5);
-// grpcClient.waitForReady(deadline, (err) => {
+// grpcLogClient.waitForReady(deadline, (err) => {
 //   if (err) {
 //     console.error(err);
 //     return;
@@ -31,31 +37,57 @@ const grpcClient = new grpcObject.logsPackage.logsService(
 //   console.log("gRPC client connected");
 // });
 
-async function connectClient() {
+async function connectLogClient() {
   while (true) {
     const deadline = new Date();
     deadline.setSeconds(deadline.getSeconds() + 5);
 
     try {
       await new Promise((resolve, reject) => {
-        grpcClient.waitForReady(deadline, (err) => {
+        grpcLogClient.waitForReady(deadline, (err) => {
           if (err) {
             console.error(err);
             reject(err);
           } else {
-            console.log("gRPC client connected");
+            console.log("gRPC Log client connected");
             resolve(null);
           }
         });
       });
       break;
     } catch (err) {
-      console.log("Failed to connect, retrying in 5 seconds...");
+      console.log("Failed to connect Logs, retrying in 5 seconds...");
       await new Promise((resolve) => setTimeout(resolve, 5000));
     }
   }
 }
 
-connectClient();
+async function connectExerciseClient() {
+  while (true) {
+    const deadline = new Date();
+    deadline.setSeconds(deadline.getSeconds() + 5);
 
-export default grpcClient;
+    try {
+      await new Promise((resolve, reject) => {
+        grpcExerciseClient.waitForReady(deadline, (err) => {
+          if (err) {
+            console.error(err);
+            reject(err);
+          } else {
+            console.log("gRPC Exercise client connected");
+            resolve(null);
+          }
+        });
+      });
+      break;
+    } catch (err) {
+      console.log("Failed to connect Exercise, retrying in 5 seconds...");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
+  }
+}
+
+connectLogClient();
+connectExerciseClient();
+
+export { grpcLogClient, grpcExerciseClient };

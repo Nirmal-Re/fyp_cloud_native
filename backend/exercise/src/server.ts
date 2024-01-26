@@ -3,7 +3,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import router from "./router";
-import { main } from "./grpc/server_need_to_make_it_exercise";
+import { main } from "./grpc/server";
 
 const app = express();
 app.use(express.json());

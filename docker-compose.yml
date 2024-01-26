@@ -21,6 +21,7 @@ services:
     command: node dist/server.js
     depends_on:
       - logs
+      - exercise
 
   logs:
     build: ./backend/logs
@@ -50,3 +51,12 @@ services:
     command: node dist/server.js
     depends_on:
       - logs
+
+  exercise:
+    build: ./backend/exercise
+    env_file:
+      - .env
+    container_name: cn_exercise
+    ports:
+      - "7000:3000"
+    command: node dist/server.js

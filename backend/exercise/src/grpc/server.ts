@@ -3,7 +3,7 @@ import * as protoLoader from "@grpc/proto-loader";
 
 import path from "path";
 
-import { getHabitStats, getTodaysUids } from "../model/logs";
+import { getHistoryWorkoutData } from "../model/exercise";
 import { ProtoGrpcType } from "../proto/logs";
 import { logsServiceHandlers } from "../proto/logsPackage/logsService";
 
@@ -36,14 +36,21 @@ function getServer() {
   const server = new grpc.Server();
 
   server.addService(Logs.logsService.service, {
-    getReport: async (req, res) => {
+    getWorkoutData: async (req, res) => {
       const { uid = "", start = 0, end = 0 } = req.request;
-      const result = await getHabitStats(uid, start, end); //Need to do some type fixing here
-      res(null, { report: result });
+      const [startDate, endDate] = [new Date(start), new Date(end)];
+      const result = await getHistoryWorkoutData(
+        Number(uid),
+        startDate,
+        endDate
+      );
+      res(null, result);
     },
-    getUid: async (req, res) => {
-      const result = await getTodaysUids();
-      res(null, { uid: result });
+    getReport: () => {
+      throw new Error("getReport not implemented");
+    },
+    getUid: () => {
+      throw new Error("getUid not implemented");
     },
   } as logsServiceHandlers);
   return server;

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import grpcClient from "../grpc/client";
+import { grpcLogClient, grpcExerciseClient } from "../grpc/client";
+import { convertDates, validDates } from "../helpers";
 
 import { ReportResponse } from "../proto/logsPackage/ReportResponse";
 
@@ -7,7 +8,7 @@ export const getUserReportData = async (req: Request, res: Response) => {
   try {
     const { uid } = req.body;
     // const stats = await getHabitStats(uid);
-    grpcClient.getReport({ uid, start: 1, end: 2 }, (err, response) => {
+    grpcLogClient.getReport({ uid, start: 1, end: 2 }, (err, response) => {
       if (err) {
         console.error(err);
         return;
@@ -18,5 +19,28 @@ export const getUserReportData = async (req: Request, res: Response) => {
   } catch (e) {
     console.log("Error with adding daily log", e);
     res.status(400).send({ error: "Error with adding daily log" });
+  }
+};
+
+export const getWorkoutHistoricData = async (req: Request, res: Response) => {
+  try {
+    const { uid, start, end } = req.body;
+    const [startDate, endDate] = convertDates(start, end);
+    if (!validDates(startDate, endDate)) {
+      console.log(startDate, endDate);
+      return res.status(400).send({ error: "Invalid dates" });
+    }
+    grpcExerciseClient.getWorkoutData({ uid, start, end }, (err, response) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      const workoutData = response;
+      return res.status(200).send(workoutData);
+    });
+  } catch (e: unknown) {
+    console.error(e);
+    if (e instanceof Error) res.status(400).send({ error: e.message });
+    else res.status(400).send({ error: "Error with getting historic data" });
   }
 };
