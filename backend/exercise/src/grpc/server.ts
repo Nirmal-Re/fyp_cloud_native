@@ -47,7 +47,7 @@ function getServer() {
       console.log("Exercise Server", result);
       res(null, result);
     },
-    getReport: () => {
+    getReport: (req, res) => {
       throw new Error("getReport not implemented");
     },
     getUid: () => {

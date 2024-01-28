@@ -40,7 +40,8 @@ function getServer() {
       const { uid = "", start = "", end = "" } = req.request;
       const [startDate, endDate] = [new Date(start), new Date(end)];
       const result = await getHabitStats(uid, startDate, endDate); //Need to do some type fixing here
-      res(null, { report: result });
+      console.log("Logs Server", result);
+      res(null, result);
     },
     getUid: async (req, res) => {
       const result = await getTodaysUids();

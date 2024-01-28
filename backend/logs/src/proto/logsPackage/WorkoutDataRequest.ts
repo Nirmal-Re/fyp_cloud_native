@@ -1,13 +1,13 @@
 // Original file: src/proto/logs.proto
 
 
-export interface ReportRequest {
+export interface WorkoutDataRequest {
   'uid'?: (string);
   'start'?: (string);
   'end'?: (string);
 }
 
-export interface ReportRequest__Output {
+export interface WorkoutDataRequest__Output {
   'uid'?: (string);
   'start'?: (string);
   'end'?: (string);

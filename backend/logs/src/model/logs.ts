@@ -14,7 +14,8 @@ import { ReportResponse } from "../proto/logsPackage/ReportResponse";
 interface Log {
   uid: number;
   uploadDateAndTime: Date;
-  [key: string]: number | Date | boolean | string;
+  moods: boolean[];
+  [key: string]: number | Date | boolean | string | boolean[];
 }
 
 export const addLog = async (log: any) => {
@@ -27,6 +28,8 @@ const createTodaysLog = async (uid: number) => {
   for (let i = 0; i < habits.length; i++) {
     log[habits[i]] = false;
   }
+  const numOfHoursLeft = 23 - log.uploadDateAndTime.getHours();
+  log.moods = new Array(numOfHoursLeft).fill(true);
   return log;
 };
 
@@ -110,31 +113,59 @@ export const getHabitStats = async (userId: string, start: Date, end: Date) => {
     },
     { $sort: { uploadDateAndTime: 1 } },
     {
-      $project: {
-        _id: 0,
-        uploadDateAndTime: 1,
-        NoOfTrue: {
-          $size: {
-            $filter: {
-              input: { $objectToArray: "$$ROOT" },
-              cond: { $eq: ["$$this.v", true] },
+      $group: {
+        _id: null,
+        uploadDateAndTime: { $push: "$uploadDateAndTime" },
+        noOfTrue: {
+          $push: {
+            $size: {
+              $filter: {
+                input: { $objectToArray: "$$ROOT" },
+                cond: { $eq: ["$$this.v", true] },
+              },
             },
           },
         },
-        NoOfFalse: {
-          $size: {
-            $filter: {
-              input: { $objectToArray: "$$ROOT" },
-              cond: { $eq: ["$$this.v", false] },
+        noOfFalse: {
+          $push: {
+            $size: {
+              $filter: {
+                input: { $objectToArray: "$$ROOT" },
+                cond: { $eq: ["$$this.v", false] },
+              },
+            },
+          },
+        },
+        goodMoods: {
+          $push: {
+            $size: {
+              $filter: {
+                input: "$moods",
+                cond: { $eq: ["$$this", true] },
+              },
+            },
+          },
+        },
+        badMoods: {
+          $push: {
+            $size: {
+              $filter: {
+                input: "$moods",
+                cond: { $eq: ["$$this", false] },
+              },
             },
           },
         },
       },
     },
+    {
+      $project: {
+        _id: 0,
+      },
+    },
   ];
   const result = await m_runAggregation("coll_logs", pipeline);
-  console.log(result);
-  return result;
+  return (result[0] as ReportResponse) || ({} as ReportResponse);
 };
 
 export const getTodaysUids = async () => {

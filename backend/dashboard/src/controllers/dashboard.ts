@@ -19,8 +19,8 @@ export const getUserReportData = async (req: Request, res: Response) => {
           console.error(err);
           return;
         }
-        const { report } = response as ReportResponse;
-        return res.status(200).send(report);
+        console.log("Response from gRPC server", response);
+        return res.status(200).send(response);
       }
     );
   } catch (e) {
