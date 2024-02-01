@@ -3,7 +3,7 @@
 
 export interface workoutType {
   'uploadDateAndTime'?: (string)[];
-  'averageForEachDay'?: (number)[];
+  'averageForEachDay'?: (number | string)[];
 }
 
 export interface workoutType__Output {

@@ -3,12 +3,12 @@
 
 export interface ReportRequest {
   'uid'?: (string);
-  'start'?: (number);
-  'end'?: (number);
+  'start'?: (string);
+  'end'?: (string);
 }
 
 export interface ReportRequest__Output {
   'uid'?: (string);
-  'start'?: (number);
-  'end'?: (number);
+  'start'?: (string);
+  'end'?: (string);
 }
