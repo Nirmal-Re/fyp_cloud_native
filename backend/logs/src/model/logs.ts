@@ -14,8 +14,16 @@ import { ReportResponse } from "../proto/logsPackage/ReportResponse";
 interface Log {
   uid: number;
   uploadDateAndTime: Date;
-  moods: boolean[];
-  [key: string]: number | Date | boolean | string | boolean[];
+  moods: boolean[] | null[];
+  [key: string]:
+    | number
+    | Date
+    | boolean
+    | string
+    | boolean[]
+    | null[]
+    | null
+    | undefined;
 }
 
 export const addLog = async (log: any) => {
@@ -29,7 +37,7 @@ const createTodaysLog = async (uid: number) => {
     log[habits[i]] = false;
   }
   const numOfHoursLeft = 23 - log.uploadDateAndTime.getHours();
-  log.moods = new Array(numOfHoursLeft).fill(true);
+  log.moods = new Array(numOfHoursLeft).fill(null);
   return log;
 };
 
