@@ -20,11 +20,9 @@ cron.schedule("55 23 * * *", async () => {
 });
 
 //TODO change it to every hour
-cron.schedule("59 * * * * *", async () => {
+cron.schedule("0 * * * *", async () => {
   console.log("Generating notifications...");
-  // Get all users
-  // const users = await getTodaysUids(); //TODO Need to get it from logs
-  await mongoDbConnect();
+  const currentHour = new Date().getHours().toString().padEnd(5, ":000");
   grpcClient.getUid({}, (err, response) => {
     if (err) {
       console.error(err);
@@ -36,7 +34,7 @@ cron.schedule("59 * * * * *", async () => {
     for (const user of users) {
       const notification: Notification = {
         uid: user,
-        msg: "This is your hourly notification",
+        msg: `Please log your mood for ${currentHour}!`,
       };
       addNotification(notification);
     }
