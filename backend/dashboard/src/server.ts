@@ -3,12 +3,14 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 
 import router from "./router";
+import "./model/redis";
 
 const app = express();
 app.use(express.json());
 
 app.use(
   cors({
+    origin: "http://localhost:4001",
     credentials: true,
   })
 );

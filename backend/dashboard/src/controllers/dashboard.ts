@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
 import { grpcLogClient, grpcExerciseClient } from "../grpc/client";
 import { convertDates, validDates } from "../helpers";
-
-import { ReportResponse } from "../proto/logsPackage/ReportResponse";
+// import { insert, get } from "../model/redis";
 
 export const getUserReportData = async (req: Request, res: Response) => {
   try {
@@ -20,6 +19,8 @@ export const getUserReportData = async (req: Request, res: Response) => {
           return;
         }
         console.log("Response from gRPC server", response);
+        // const key = `journal-${uid}-${start}-${end}`;
+        // insert(key, JSON.stringify(response));
         return res.status(200).send(response);
       }
     );
@@ -45,6 +46,8 @@ export const getWorkoutHistoricData = async (req: Request, res: Response) => {
           return;
         }
         const workoutData = response;
+        // const key = `workout-${uid}-${start}-${end}`;
+        // insert(key, JSON.stringify(response));
         return res.status(200).send(workoutData);
       }
     );
