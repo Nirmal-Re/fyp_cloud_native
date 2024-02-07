@@ -10,6 +10,9 @@ export const mongoDbConnect = async () => {
     await client.connect();
     console.log("Connected successfully to mongoDB server");
     conn = await client.db(DB_mongo.database);
+    conn
+      .collection("coll_notifications")
+      .createIndex({ uid: 1 }, { unique: true });
   } catch (e: any) {
     console.log("Error with connection", e.stack);
     throw e; // Throw the error to be handled by the caller

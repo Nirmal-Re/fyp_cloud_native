@@ -10,6 +10,12 @@ const mongoDbConnect = async () => {
     await client.connect();
     console.log("Connected successfully to mongoDB server");
     conn = await client.db(DB_mongo.database);
+    conn
+      .collection("coll_user_workout_types")
+      .createIndex({ uid: 1 }, { unique: true });
+    conn
+      .collection("coll_workout_data")
+      .createIndex({ uid: 1, type: 1, uploadDateAndTime: 1 }, { unique: true });
   } catch (e: any) {
     console.log("Error with connection", e.stack);
     throw e; // Throw the error to be handled by the caller
@@ -68,11 +74,13 @@ export const m_insertMany = async (
 export const m_getAllItems = async (
   collection: string,
   filter: any,
-  fields: any = {}
+  fields: any = {},
+  sort: any = {}
 ): Promise<any[]> => {
   const result = await conn
     .collection(collection)
     .find(filter, { projection: fields })
+    .sort(sort)
     .toArray();
   return result;
 };

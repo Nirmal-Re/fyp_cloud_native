@@ -7,7 +7,6 @@ import {
 
 import grpcClient from "../grpc/client";
 import { uidResponse } from "../proto/logsPackage/uidResponse";
-import { mongoDbConnect } from "../model/mongoDB";
 
 interface Notification {
   uid: Number;
