@@ -6,6 +6,7 @@ import {
   m_getOne,
   m_getAllItems,
   m_runAggregation,
+  m_updateOne,
 } from "./mongoDB";
 import {
   updateWorkoutAll,
@@ -28,6 +29,14 @@ export const getWorkoutTypes = async (uid: number) => {
   );
 };
 
+export const updateWorkoutLog = async (_id: string, log: any) => {
+  return await m_updateOne(
+    "coll_workout_data",
+    { _id: new ObjectId(_id) },
+    { $set: log }
+  );
+};
+
 export const updateWorkoutTypes = async (
   uid: number,
   toUpdate: updateWorkoutAll
@@ -37,10 +46,10 @@ export const updateWorkoutTypes = async (
   for (const update of toUpdate) {
     // Add exercises to the array
     update.add = update.add = update.add.map((exercise) =>
-      exercise.trim().toUpperCase().replace(/\s/g, "")
+      exercise.trim().toLowerCase()
     );
     update.remove = update.remove = update.remove.map((exercise) =>
-      exercise.trim().toUpperCase().replace(/\s/g, "")
+      exercise.trim().toLowerCase()
     );
     await m_getOneOrUpdate(
       "coll_user_workout_types",
