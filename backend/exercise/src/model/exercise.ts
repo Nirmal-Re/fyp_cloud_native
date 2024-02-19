@@ -1,8 +1,11 @@
+import { ObjectId } from "mongodb";
+
 import {
   m_getOneOrUpdate,
   m_insertOne,
   m_getOne,
   m_getAllItems,
+  m_runAggregation,
 } from "./mongoDB";
 import {
   updateWorkoutAll,
@@ -80,7 +83,6 @@ const calculateAverage = (data: any): number => {
     });
     const total = all.reduce((a: number, b: number) => a + b, 0);
     const average = total / all.length;
-    console.log("Averages: ", average);
     exerciseAverages.push(average);
   }
   const total = exerciseAverages.reduce((a: number, b: number) => a + b, 0);
@@ -109,4 +111,30 @@ export const getHistoryWorkoutData = async (
     };
   }
   return results;
+};
+
+export const getWorkoutIDs = async (userId: string, type: string) => {
+  const pipeline = [
+    {
+      $match: {
+        uid: Number(userId),
+        type: type,
+      },
+    },
+    { $sort: { uploadDateAndTime: 1 } },
+    {
+      $project: {
+        _id: 0,
+        id: "$_id",
+        uploadDateAndTime: 1,
+      },
+    },
+  ];
+
+  const result = await m_runAggregation("coll_workout_data", pipeline);
+  return result;
+};
+
+export const getWorkoutByID = async (id: string) => {
+  return await m_getOne("coll_workout_data", { _id: new ObjectId(id) });
 };

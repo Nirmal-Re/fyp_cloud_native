@@ -5,6 +5,8 @@ import {
   getWorkoutTypes,
   updateWorkoutTypes,
   updateWorkoutData,
+  getWorkoutIDs,
+  getWorkoutByID,
 } from "../model/exercise";
 import { updateWorkoutAll, wholeWorkoutData } from "../customTypes/exercise";
 
@@ -45,11 +47,37 @@ export const addWorkoutData = async (req: Request, res: Response) => {
     //Vaidate the data and also changes the exercise names to uppercase
     if (!(await isValidWorkoutData(uid, toUpdate)))
       return res.status(400).json({ error: "Invalid workout data" });
-    console.log(toUpdate);
     const d = await updateWorkoutData(uid, toUpdate);
     res.status(200).json({ d });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+//new thing
+export const getWorkoutIDsController = async (req: Request, res: Response) => {
+  try {
+    const { uid } = req.body;
+    const type = req.params.type;
+    if (!type) return res.status(400).send({ error: "No type provided" });
+    const value = await getWorkoutIDs(uid, type);
+    return res.status(200).json(value);
+  } catch (e) {
+    console.log("Error with getting asked logs", e);
+    res.status(400).send({ error: "Error with getting asked logs" });
+  }
+};
+
+export const getWorkoutByIDController = async (req: Request, res: Response) => {
+  try {
+    const workoutID = req.params.id;
+    if (!workoutID)
+      return res.status(400).send({ error: "No workout id provided" });
+    const value = await getWorkoutByID(workoutID);
+    return res.status(200).json(value);
+  } catch (e) {
+    console.log("Error with getting log by id", e);
+    res.status(400).send({ error: "Error with getting log by id" });
   }
 };

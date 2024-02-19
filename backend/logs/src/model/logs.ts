@@ -186,3 +186,25 @@ export const getTodaysUids = async () => {
   const uids = result.map((item) => item.uid);
   return uids;
 };
+
+//new stuff
+export const getLogIDs = async (userId: string) => {
+  const pipeline = [
+    {
+      $match: {
+        uid: Number(userId),
+      },
+    },
+    { $sort: { uploadDateAndTime: 1 } },
+    {
+      $project: {
+        _id: 0,
+        id: "$_id",
+        uploadDateAndTime: 1,
+      },
+    },
+  ];
+
+  const result = await m_runAggregation("coll_logs", pipeline);
+  return result;
+};

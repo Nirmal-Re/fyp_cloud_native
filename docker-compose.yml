@@ -22,7 +22,7 @@ services:
     depends_on:
       - logs
       - exercise
-      - redis-database
+      # - redis-database
 
   logs:
     build: ./backend/logs
