@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { grpcLogClient, grpcExerciseClient } from "../grpc/client";
 import { convertDates, validDates } from "../helpers";
-// import { insert, get } from "../model/redis";
+import { insert, ifExistGet } from "../model/redis";
 
 export const getUserReportData = async (req: Request, res: Response) => {
   try {
@@ -11,6 +11,13 @@ export const getUserReportData = async (req: Request, res: Response) => {
     if (!validDates(startDate, endDate)) {
       return res.status(400).send({ error: "Invalid dates" });
     }
+
+    const key = `journal-${uid}-${start}-${end}`;
+    const redisCall = await ifExistGet(key);
+    if (redisCall) {
+      console.log("RESPONSE FROM REDIS");
+      return res.status(200).send(redisCall);
+    }
     grpcLogClient.getReport(
       { uid: String(uid), start: String(startDate), end: String(endDate) },
       (err, response) => {
@@ -19,8 +26,8 @@ export const getUserReportData = async (req: Request, res: Response) => {
           return;
         }
         console.log("Response from gRPC server", response);
-        // const key = `journal-${uid}-${start}-${end}`;
-        // insert(key, JSON.stringify(response));
+        const key = `journal-${uid}-${start}-${end}`;
+        insert(key, JSON.stringify(response));
         return res.status(200).send(response);
       }
     );
@@ -38,6 +45,13 @@ export const getWorkoutHistoricData = async (req: Request, res: Response) => {
       console.log(startDate, endDate);
       return res.status(400).send({ error: "Invalid dates" });
     }
+    const key = `workout-${uid}-${start}-${end}`;
+    const redisCall = await ifExistGet(key);
+
+    if (redisCall) {
+      console.log("RESPONSE FROM REDIS");
+      return res.status(200).send(redisCall);
+    }
     grpcExerciseClient.getWorkoutData(
       { uid, start: String(startDate), end: String(endDate) },
       (err, response) => {
@@ -46,8 +60,8 @@ export const getWorkoutHistoricData = async (req: Request, res: Response) => {
           return;
         }
         const workoutData = response;
-        // const key = `workout-${uid}-${start}-${end}`;
-        // insert(key, JSON.stringify(response));
+        const key = `workout-${uid}-${start}-${end}`;
+        insert(key, JSON.stringify(response));
         return res.status(200).send(workoutData);
       }
     );
