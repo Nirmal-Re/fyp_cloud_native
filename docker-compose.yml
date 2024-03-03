@@ -3,6 +3,7 @@ version: "3.9"
 services:
   nginx:
     build: ./nginx
+    image: cloudnativekubernetesservices.azurecr.io/nginx
     container_name: cn_nginx
     depends_on:
       - dashboard
@@ -13,6 +14,7 @@ services:
 
   dashboard:
     build: ./backend/dashboard
+    image: cloudnativekubernetesservices.azurecr.io/dashboard
     container_name: cn_dashboard
     env_file:
       - .env
@@ -22,10 +24,11 @@ services:
     depends_on:
       - logs
       - exercise
-      - redis-database
+      # - redis-database
 
   logs:
     build: ./backend/logs
+    image: cloudnativekubernetesservices.azurecr.io/logs
     env_file:
       - .env
     container_name: ch_journal_logs
@@ -35,6 +38,7 @@ services:
 
   users:
     build: ./backend/users
+    image: cloudnativekubernetesservices.azurecr.io/users
     env_file:
       - .env
     container_name: cn_users
@@ -44,6 +48,7 @@ services:
 
   notifications:
     build: ./backend/notifications
+    image: cloudnativekubernetesservices.azurecr.io/notifications
     env_file:
       - .env
     container_name: cn_notifications
@@ -55,22 +60,23 @@ services:
 
   exercise:
     build: ./backend/exercise
+    image: cloudnativekubernetesservices.azurecr.io/exercise
     env_file:
       - .env
     container_name: cn_exercise
     ports:
       - "7000:3000"
     command: node dist/server.js
+#   redis-database:
+#     image: redis/redis-stack:latest
+#     image: cloudnativekubernetesservices.azurecr.io/redis-stack
+#     container_name: redis-stack
+#     ports:
+#       - "6379:6379"
+#       - "8001:8001"
+#     restart: always
+#     volumes:
+#       - redisData:/data
 
-  redis-database:
-    image: redis/redis-stack:latest
-    container_name: redis-stack
-    ports:
-      - "6379:6379"
-      - "8001:8001"
-    restart: always
-    volumes:
-      - redisData:/data
-
-volumes:
-  redisData:
+# volumes:
+#   redisData:

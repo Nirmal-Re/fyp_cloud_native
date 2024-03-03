@@ -1,10 +1,13 @@
 import { createClient } from "redis";
 
-// Initialize the Redis client
+const url = process?.env?.REDIS_CONNECTION_URL || "redis://localhost:6380"; // Initialize the Redis client
+const password = process?.env?.REDIS_PASSWORD || ""; // Initialize the Redis client
 const client = createClient({
-  url: "redis://redis-database:6379", // Adjust the URL as needed
+  password,
+  url,
 });
 
+client.on("connect", () => console.log("Connected to Redis"));
 client.on("error", (err) => console.error("Redis Client Error", err));
 
 // Connect to Redis

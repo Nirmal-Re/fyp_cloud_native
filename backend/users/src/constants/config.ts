@@ -1,15 +1,16 @@
 import dotenv from "dotenv";
 import path from "path";
 
-dotenv.config({path: path.join(__dirname, "../../.env")});
+dotenv.config({ path: path.join(__dirname, "../../.env") });
 // console.log(path.join(__dirname, "../../.env"));
 
-interface DB_Interface { 
-    host: string;
-    user: string;
-    // name: string;
-    password: string;
-    database: string;
+interface DB_Interface {
+  host: string;
+  user: string;
+  // name: string;
+  password: string;
+  database: string;
+  port: number;
 }
 
 // export const DB_mongo:DB_Interface = {
@@ -19,32 +20,38 @@ interface DB_Interface {
 //     password: ""
 // };
 
-const {SQL_DB_HOST, SQL_DB_USER, SQL_DB_PASSWORD, SQL_DB_NAME, JWT_ACCESS_TOKEN_SECRET, JWT_REFRESH_TOKEN_SECRET, NODE_ENV} = process.env;
+const {
+  SQL_DB_HOST,
+  SQL_DB_USER,
+  SQL_DB_PASSWORD,
+  SQL_DB_NAME,
+  JWT_ACCESS_TOKEN_SECRET,
+  JWT_REFRESH_TOKEN_SECRET,
+  NODE_ENV,
+  SQL_DB_PORT,
+} = process.env;
 if (!SQL_DB_HOST || !SQL_DB_USER || !SQL_DB_PASSWORD || !SQL_DB_NAME) {
-    throw new Error("SQL database connection values are not defined");
+  throw new Error("SQL database connection values are not defined");
 }
 
-
-
-export const DB_mysql:DB_Interface = {
-    host: NODE_ENV === 'production' ? "host.docker.internal": SQL_DB_HOST,
-    user:  SQL_DB_USER,
-    password: SQL_DB_PASSWORD,
-    database: SQL_DB_NAME,
-}
-
+export const DB_mysql: DB_Interface = {
+  host: NODE_ENV === "production" ? SQL_DB_HOST : "host.docker.internal",
+  user: SQL_DB_USER,
+  password: SQL_DB_PASSWORD,
+  database: SQL_DB_NAME,
+  port: parseInt(SQL_DB_PORT || "3306"),
+};
 
 interface JWT_Interface {
-    JWT_ACCESS_TOKEN_SECRET: string;
-    JWT_REFRESH_TOKEN_SECRET: string;
-
+  JWT_ACCESS_TOKEN_SECRET: string;
+  JWT_REFRESH_TOKEN_SECRET: string;
 }
 
 if (!JWT_ACCESS_TOKEN_SECRET || !JWT_REFRESH_TOKEN_SECRET) {
-    throw new Error("JWT secrets not defined");
+  throw new Error("JWT secrets not defined");
 }
 
-export const secrets:JWT_Interface = {
-    JWT_ACCESS_TOKEN_SECRET,
-    JWT_REFRESH_TOKEN_SECRET
-}
+export const secrets: JWT_Interface = {
+  JWT_ACCESS_TOKEN_SECRET,
+  JWT_REFRESH_TOKEN_SECRET,
+};

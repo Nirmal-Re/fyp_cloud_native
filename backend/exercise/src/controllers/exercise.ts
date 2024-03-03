@@ -52,7 +52,7 @@ export const addWorkoutData = async (req: Request, res: Response) => {
     if (toUpdate?._id) {
       const id = toUpdate._id;
       delete toUpdate._id;
-      const upd = await updateWorkoutLog(toUpdate._id, toUpdate);
+      const upd = await updateWorkoutLog(id, toUpdate);
       return res.status(200).json({ update: upd });
     }
 
@@ -63,7 +63,6 @@ export const addWorkoutData = async (req: Request, res: Response) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
-
 
 //new thing
 export const getWorkoutIDsController = async (req: Request, res: Response) => {
