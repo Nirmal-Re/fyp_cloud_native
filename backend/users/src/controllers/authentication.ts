@@ -73,7 +73,7 @@ export const login = async (req: express.Request, res: express.Response) => {
     const accessToken = jwt.sign({ email, uid: id }, JWT_ACCESS_TOKEN_SECRET);
     res.cookie("access_token", accessToken, {
       httpOnly: true,
-      maxAge: 1000 * 60 * 60 * 24 * 30,
+      maxAge: 1000 * 60 * 60 * 24 * 120,
     });
     return res.status(200).send({
       message: "Logged in successfully",
