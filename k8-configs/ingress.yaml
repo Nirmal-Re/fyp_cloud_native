@@ -1,0 +1,46 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minimal-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx-example
+  rules:
+    http:
+      paths:
+        - pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: users-service
+              port:
+                number: 80
+        - pathType: Prefix
+          path: "/exercise"
+          backend:
+            service:
+              name: exercise-service
+              port:
+                number: 80
+        - pathType: Prefix
+          path: "/logs"
+          backend:
+            service:
+              name: logs-service
+              port:
+                number: 80
+        - pathType: Prefix
+          path: "/notifications"
+          backend:
+            service:
+              name: notifications-service
+              port:
+                number: 80
+        - pathType: Prefix
+          path: "/dashboard"
+          backend:
+            service:
+              name: dashboard-service
+              port:
+                number: 80

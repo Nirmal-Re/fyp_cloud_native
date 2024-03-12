@@ -27,4 +27,4 @@ RUN npm ci --only=production
 
 COPY --from=development /app/dist ./dist
 
-CMD ["npm start"]
+CMD ["npm", "start"]

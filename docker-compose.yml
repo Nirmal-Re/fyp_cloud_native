@@ -38,7 +38,7 @@ services:
 
   users:
     build: ./backend/users
-    image: cloudnativekubernetesservices.azurecr.io/users
+    image: cloudnativekubernetesservices.azurecr.io/users:v5
     env_file:
       - .env
     container_name: cn_users
