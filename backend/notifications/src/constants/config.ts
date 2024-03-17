@@ -32,10 +32,7 @@ if (!MONGO_DB_HOST || !MONGO_DB_USER || !MONGO_DB_PASSWORD || !MONGO_DB_NAME) {
 }
 
 export const DB_mongo: DB_Interface = {
-  host:
-    NODE_ENV === "production"
-      ? "mongodb://host.docker.internal:27017"
-      : MONGO_DB_HOST,
+  host: MONGO_DB_HOST || "mongodb://host.docker.internal:27017",
   user: MONGO_DB_USER,
   password: MONGO_DB_PASSWORD,
   database: MONGO_DB_NAME,
