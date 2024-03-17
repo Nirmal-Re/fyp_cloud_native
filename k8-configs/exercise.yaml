@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-deployment
+  name: exercise-deployment
   labels:
-    app: users
+    app: exercise
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: exercise
   template:
     metadata:
       labels:
-        app: users
+        app: exercise
     spec:
       containers:
-        - name: users
-          image: nirmalAzureContainerRegistry.azurecr.io/users:v1
+        - name: exercise
+          image: nirmalAzureContainerRegistry.azurecr.io/exercise:v1
           ports:
             - containerPort: 3000
+            - containerPort: 8082
           envFrom:
             - configMapRef:
                 name: cloudnative-config
@@ -27,11 +28,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-service
+  name: exercise-service
 spec:
   selector:
-    app: users
+    app: exercise
   ports:
-    - protocol: TCP
+    - name: express
+      protocol: TCP
       port: 80
       targetPort: 3000
+    - name: grpc
+      protocol: TCP
+      port: 8082
+      targetPort: 8082

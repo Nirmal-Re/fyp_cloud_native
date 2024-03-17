@@ -3,7 +3,7 @@ version: "3.9"
 services:
   nginx:
     build: ./nginx
-    image: cloudnativekubernetesservices.azurecr.io/nginx
+    image: nirmalAzureContainerRegistry.azurecr.io/nginx:v1
     container_name: cn_nginx
     depends_on:
       - dashboard
@@ -14,7 +14,7 @@ services:
 
   dashboard:
     build: ./backend/dashboard
-    image: cloudnativekubernetesservices.azurecr.io/dashboard
+    image: nirmalAzureContainerRegistry.azurecr.io/dashboard:v1
     container_name: cn_dashboard
     env_file:
       - .env
@@ -28,7 +28,7 @@ services:
 
   logs:
     build: ./backend/logs
-    image: cloudnativekubernetesservices.azurecr.io/logs
+    image: nirmalAzureContainerRegistry.azurecr.io/logs:v1
     env_file:
       - .env
     container_name: ch_journal_logs
@@ -38,7 +38,7 @@ services:
 
   users:
     build: ./backend/users
-    image: cloudnativekubernetesservices.azurecr.io/users:v5
+    image: nirmalAzureContainerRegistry.azurecr.io/users:v1
     env_file:
       - .env
     container_name: cn_users
@@ -48,7 +48,7 @@ services:
 
   notifications:
     build: ./backend/notifications
-    image: cloudnativekubernetesservices.azurecr.io/notifications
+    image: nirmalAzureContainerRegistry.azurecr.io/notifications:v1
     env_file:
       - .env
     container_name: cn_notifications
@@ -60,7 +60,7 @@ services:
 
   exercise:
     build: ./backend/exercise
-    image: cloudnativekubernetesservices.azurecr.io/exercise
+    image: nirmalAzureContainerRegistry.azurecr.io/exercise:v1
     env_file:
       - .env
     container_name: cn_exercise

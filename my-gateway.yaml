@@ -1,0 +1,11 @@
+apiVersion: azure.microsoft.com/v1
+kind: Gateway
+metadata:
+  name: my-gateway
+spec:
+  routes:
+    - name: route1
+      host: dnejhhdjcaa5d5df.fz42.alb.azure.com
+      patth: /
+      backend:
+        target: cn-users--bdtpnqa

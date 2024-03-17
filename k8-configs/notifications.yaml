@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-deployment
+  name: notifications-deployment
   labels:
-    app: users
+    app: notifications
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: notifications
   template:
     metadata:
       labels:
-        app: users
+        app: notifications
     spec:
       containers:
-        - name: users
-          image: nirmalAzureContainerRegistry.azurecr.io/users:v1
+        - name: notifications
+          image: nirmalAzureContainerRegistry.azurecr.io/notifications:v1
           ports:
             - containerPort: 3000
           envFrom:
@@ -27,10 +27,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-service
+  name: notifications-service
 spec:
   selector:
-    app: users
+    app: notifications
   ports:
     - protocol: TCP
       port: 80

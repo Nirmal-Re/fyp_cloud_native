@@ -1,24 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: users-deployment
+  name: logs-deployment
   labels:
-    app: users
+    app: logs
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: users
+      app: logs
   template:
     metadata:
       labels:
-        app: users
+        app: logs
     spec:
       containers:
-        - name: users
-          image: nirmalAzureContainerRegistry.azurecr.io/users:v1
+        - name: logs
+          image: nirmalAzureContainerRegistry.azurecr.io/logs:v1
           ports:
             - containerPort: 3000
+            - containerPort: 8082
           envFrom:
             - configMapRef:
                 name: cloudnative-config
@@ -27,11 +28,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: users-service
+  name: logs-service
 spec:
   selector:
-    app: users
+    app: logs
   ports:
-    - protocol: TCP
+    - name: express
+      protocol: TCP
       port: 80
       targetPort: 3000
+    - name: grpc
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
