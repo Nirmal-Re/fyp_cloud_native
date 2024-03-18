@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: logs
-          image: nirmalAzureContainerRegistry.azurecr.io/logs:v1
+          image: nirmalAzureContainerRegistry.azurecr.io/logs:v2
           ports:
             - containerPort: 3000
             - containerPort: 8082

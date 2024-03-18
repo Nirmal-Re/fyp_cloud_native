@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: exercise
-          image: nirmalAzureContainerRegistry.azurecr.io/exercise:v1
+          image: nirmalAzureContainerRegistry.azurecr.io/exercise:v3
           ports:
             - containerPort: 3000
             - containerPort: 8082

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: dashboard
-          image: nirmalAzureContainerRegistry.azurecr.io/dashboard:v1
+          image: nirmalAzureContainerRegistry.azurecr.io/dashboard:v2
           ports:
             - containerPort: 3000
           envFrom:
