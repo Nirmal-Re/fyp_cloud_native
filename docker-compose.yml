@@ -14,7 +14,7 @@ services:
 
   dashboard:
     build: ./backend/dashboard
-    image: nirmalAzureContainerRegistry.azurecr.io/dashboard:v2
+    image: nirmalAzureContainerRegistry.azurecr.io/dashboard:v3
     container_name: cn_dashboard
     env_file:
       - .env

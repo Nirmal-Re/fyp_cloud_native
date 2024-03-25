@@ -10,6 +10,13 @@ spec:
     - http:
         paths:
           - pathType: Prefix
+            path: /users(/|$)(.*)
+            backend:
+              service:
+                name: users-service
+                port:
+                  number: 80
+          - pathType: Prefix
             path: /exercise(/|$)(.*)
             backend:
               service:
@@ -35,12 +42,5 @@ spec:
             backend:
               service:
                 name: dashboard-service
-                port:
-                  number: 80
-          - pathType: Prefix
-            path: /(/|$)(.*)
-            backend:
-              service:
-                name: users-service
                 port:
                   number: 80

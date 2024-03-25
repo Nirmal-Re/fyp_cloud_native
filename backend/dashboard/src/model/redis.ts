@@ -1,10 +1,17 @@
 import { createClient } from "redis";
+import dotenv from "dotenv";
+import path from "path";
+
+dotenv.config({ path: path.join(__dirname, "../../.env") });
 
 const url = process?.env?.REDIS_CONNECTION_URL || "redis://localhost:6380"; // Initialize the Redis client
 const password = process?.env?.REDIS_PASSWORD || ""; // Initialize the Redis client
 const client = createClient({
   password,
   url,
+  socket: {
+    keepAlive: 60000, // keep-alive packets sent every 60 seconds
+  },
 });
 
 client.on("connect", () => console.log("Connected to Redis"));
