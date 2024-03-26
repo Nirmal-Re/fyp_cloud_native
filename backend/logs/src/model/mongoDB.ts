@@ -19,7 +19,6 @@ const mongoDbConnect = async () => {
       .createIndex({ uid: 1 }, { unique: true });
   } catch (e: any) {
     console.log("Error with connection", e.stack);
-    throw e; // Throw the error to be handled by the caller
   }
 };
 

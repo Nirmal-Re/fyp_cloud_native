@@ -39,7 +39,8 @@ function getServer() {
     getReport: async (req, res) => {
       const { uid = "", start = "", end = "" } = req.request;
       const [startDate, endDate] = [new Date(start), new Date(end)];
-      const result = await getHabitStats(uid, startDate, endDate); //Need to do some type fixing here
+      console.log("Logs Server", { uid, startDate, endDate });
+      const result = await getHabitStats(Number(uid), startDate, endDate); //Need to do some type fixing here
       console.log("Logs Server", result);
       res(null, result);
     },
