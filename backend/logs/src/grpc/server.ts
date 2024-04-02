@@ -37,11 +37,11 @@ function getServer() {
 
   server.addService(Logs.logsService.service, {
     getReport: async (req, res) => {
+      console.log("Log: gRPC server hit");
       const { uid = "", start = "", end = "" } = req.request;
       const [startDate, endDate] = [new Date(start), new Date(end)];
       console.log("Logs Server", { uid, startDate, endDate });
       const result = await getHabitStats(Number(uid), startDate, endDate); //Need to do some type fixing here
-      console.log("Logs Server", result);
       res(null, result);
     },
     getUid: async (req, res) => {

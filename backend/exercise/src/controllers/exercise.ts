@@ -9,7 +9,9 @@ import {
   getWorkoutByID,
   updateWorkoutLog,
 } from "../model/exercise";
+import { convertDates, validDates } from "../helpers";
 import { updateWorkoutAll, wholeWorkoutData } from "../customTypes/exercise";
+import { getHistoryWorkoutData } from "../model/exercise";
 
 export const updateWorkout = async (req: Request, res: Response) => {
   try {
@@ -88,5 +90,23 @@ export const getWorkoutByIDController = async (req: Request, res: Response) => {
   } catch (e) {
     console.log("Error with getting log by id", e);
     res.status(400).send({ error: "Error with getting log by id" });
+  }
+};
+
+export const getWorkoutHistoricData = async (req: Request, res: Response) => {
+  try {
+    const { uid, start, end } = req.body;
+    const [startDate, endDate] = convertDates(start, end);
+    if (!validDates(startDate, endDate)) {
+      console.log(startDate, endDate);
+      return res.status(400).send({ error: "Invalid dates" });
+    }
+    console.log(start, end);
+    const data = await getHistoryWorkoutData(uid, startDate, endDate);
+    return res.status(200).send(data);
+  } catch (e: unknown) {
+    console.error(e);
+    if (e instanceof Error) res.status(400).send({ error: e.message });
+    else res.status(400).send({ error: "Error with getting historic data" });
   }
 };

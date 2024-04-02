@@ -9,7 +9,12 @@ interface JWT_Interface {
 }
 
 // JWT secrets
-const { JWT_ACCESS_TOKEN_SECRET, JWT_REFRESH_TOKEN_SECRET } = process.env;
+const {
+  JWT_ACCESS_TOKEN_SECRET,
+  JWT_REFRESH_TOKEN_SECRET,
+  LOG_SERVER_ID,
+  EXERCISE_SERVER_ID,
+} = process.env;
 if (!JWT_ACCESS_TOKEN_SECRET || !JWT_REFRESH_TOKEN_SECRET) {
   throw new Error("JWT secrets not defined");
 }
@@ -17,4 +22,9 @@ if (!JWT_ACCESS_TOKEN_SECRET || !JWT_REFRESH_TOKEN_SECRET) {
 export const secrets: JWT_Interface = {
   JWT_ACCESS_TOKEN_SECRET,
   JWT_REFRESH_TOKEN_SECRET,
+};
+
+export const serverIDs = {
+  LOG_SERVER_ID,
+  EXERCISE_SERVER_ID,
 };

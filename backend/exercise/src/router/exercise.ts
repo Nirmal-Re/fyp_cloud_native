@@ -6,6 +6,7 @@ import {
   addWorkoutData,
   getWorkoutIDsController,
   getWorkoutByIDController,
+  getWorkoutHistoricData,
 } from "../controllers/exercise";
 
 export default (router: Router) => {
@@ -22,4 +23,5 @@ export default (router: Router) => {
     isAuthenticated,
     getWorkoutByIDController
   );
+  router.post("/get-historic-workout-data", getWorkoutHistoricData);
 };

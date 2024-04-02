@@ -30,12 +30,14 @@ spec:
     spec:
       containers:
         - name: users
-          image: nirmalAzureContainerRegistry.azurecr.io/users:v1
+          image: nazurecontainerregistry.azurecr.io/users:v3
           ports:
             - containerPort: 3000
           envFrom:
             - configMapRef:
                 name: users-config
+      imagePullSecrets:
+        - name: regcred
 
 ---
 apiVersion: v1
@@ -49,17 +51,3 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
-
----
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: users-hpa
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: users-deployment
-  minReplicas: 1
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 60

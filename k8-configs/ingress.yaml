@@ -1,61 +1,44 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: azure-application-gateway-ingress
 spec:
-  ingressClassName: nginx
+  ingressClassName: azure-application-gateway
   rules:
     - http:
         paths:
           - pathType: Prefix
-            path: /users(/|$)(.*)
+            path: /users
             backend:
               service:
                 name: users-service
                 port:
                   number: 80
           - pathType: Prefix
-            path: /exercise(/|$)(.*)
+            path: /exercise
             backend:
               service:
                 name: exercise-service
                 port:
                   number: 80
           - pathType: Prefix
-            path: /logs(/|$)(.*)
+            path: /logs
             backend:
               service:
                 name: logs-service
                 port:
                   number: 80
           - pathType: Prefix
-            path: /notifications(/|$)(.*)
+            path: /notifications
             backend:
               service:
                 name: notifications-service
                 port:
                   number: 80
           - pathType: Prefix
-            path: /dashboard(/|$)(.*)
+            path: /dashboard
             backend:
               service:
                 name: dashboard-service
                 port:
                   number: 80
-
----
-apiVersion: autoscaling/v1
-kind: HorizontalPodAutoscaler
-metadata:
-  name: nginx-ingress-controller
-  namespace: ingress-nginx
-spec:
-  scaleTargetRef:
-    apiVersion: apps/v1
-    kind: Deployment
-    name: nginx-ingress-controller
-  minReplicas: 1
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 60

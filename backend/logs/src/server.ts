@@ -18,7 +18,10 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", router());
+app.get("/logs", (req, res) => {
+  res.status(200).send("Hello");
+});
+app.use("/logs", router());
 
 main();
 

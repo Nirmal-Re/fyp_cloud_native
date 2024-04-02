@@ -6,6 +6,7 @@ import path from "path";
 import { getHistoryWorkoutData } from "../model/exercise";
 import { ProtoGrpcType } from "../proto/logs";
 import { logsServiceHandlers } from "../proto/logsPackage/logsService";
+import { Console } from "console";
 
 const GRPC_PORT = 8082;
 const PROTO_PATH = path.resolve(__dirname, "../proto/logs.proto");
@@ -37,6 +38,7 @@ function getServer() {
 
   server.addService(Logs.logsService.service, {
     getWorkoutData: async (req, res) => {
+      console.log("Exerciser: gRPC server hit");
       const { uid = "", start = "", end = "" } = req.request;
       const [startDate, endDate] = [new Date(start), new Date(end)];
       const result = await getHistoryWorkoutData(
@@ -44,7 +46,6 @@ function getServer() {
         startDate,
         endDate
       );
-      console.log("Exercise Server", result);
       res(null, result);
     },
     getReport: (req, res) => {

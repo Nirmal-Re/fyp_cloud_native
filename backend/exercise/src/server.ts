@@ -18,9 +18,12 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/", router());
+app.get("/exercise", (req, res) => {
+  res.status(200).send("Hello");
+});
+app.use("/exercise", router());
 
-main();
+// main();
 
 app.listen(3000, () => {
   console.log("Server is running on http://localhost:3000/");

@@ -7,6 +7,7 @@ import {
   getDailyLog,
   getLogIDsController,
   getLogByIdController,
+  getUserLogData,
 } from "../controllers/logs";
 import { isAuthenticated } from "../middlewares";
 
@@ -17,4 +18,5 @@ export default (router: Router) => {
   router.get("/get-daily-log", isAuthenticated, getDailyLog);
   router.get("/get-log-ids", isAuthenticated, getLogIDsController);
   router.get("/get-log-by-id/:id", isAuthenticated, getLogByIdController);
+  router.post("/get-user-log-data", getUserLogData);
 };
