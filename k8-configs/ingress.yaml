@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: azure-application-gateway-ingress
+  name: aspnetapp
 spec:
   ingressClassName: azure-application-gateway
   rules:

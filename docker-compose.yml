@@ -3,7 +3,7 @@ version: "3.9"
 services:
   dashboard:
     build: ./backend/dashboard
-    image: nazurecontainerregistry.azurecr.io/dashboard:v4
+    image: nirmalazurecr.azurecr.io/dashboard
     container_name: cn_dashboard
     env_file:
       - .env
@@ -17,7 +17,7 @@ services:
 
   logs:
     build: ./backend/logs
-    image: nazurecontainerregistry.azurecr.io/logs:v4
+    image: nirmalazurecr.azurecr.io/logs
     env_file:
       - .env
     container_name: ch_journal_logs
@@ -27,7 +27,7 @@ services:
 
   users:
     build: ./backend/users
-    image: nazurecontainerregistry.azurecr.io/users:v3
+    image: nirmalazurecr.azurecr.io/users
     env_file:
       - .env
     container_name: cn_users
@@ -37,7 +37,7 @@ services:
 
   notifications:
     build: ./backend/notifications
-    image: nazurecontainerregistry.azurecr.io/notifications:v3
+    image: nirmalazurecr.azurecr.io/notifications
     env_file:
       - .env
     container_name: cn_notifications
@@ -49,7 +49,7 @@ services:
 
   exercise:
     build: ./backend/exercise
-    image: nazurecontainerregistry.azurecr.io/exercise:v4
+    image: nirmalazurecr.azurecr.io/exercise
     env_file:
       - .env
     container_name: cn_exercise

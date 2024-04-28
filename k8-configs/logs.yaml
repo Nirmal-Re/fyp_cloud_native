@@ -10,8 +10,6 @@ data:
   JWT_ACCESS_TOKEN_SECRET: e5f3f839b5c8678377ca97cd373f51f28d0c69e5f60726c4d79b7626bc401e6e6209768f83a7c3634e64329966eb6774596c91250dce24af68fe4d5f5912aecc
   JWT_REFRESH_TOKEN_SECRET: 7af4989628b9c23bdeb29247ddf74df3ffbb15f39318ebe298e87dd55e2aaa79cbc6f8e1635924914702276d26ba7833e63f8e72b105e7cf3c7940fd6eeac470
 
-
-az containerapp update --name logs --resource-group ACA-cloud-native ---configuration-settings 'environmentVariables.JWT_REFRESH_TOKEN_SECRET=e5f3f839b5c8678377ca97cd373f51f28d0c69e5f60726c4d79b7626bc401e6e6209768f83a7c3634e64329966eb6774596c91250dce24af68fe4d5f5912aecc'
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -20,7 +18,7 @@ metadata:
   labels:
     app: logs
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: logs
@@ -31,15 +29,17 @@ spec:
     spec:
       containers:
         - name: logs
-          image: nazurecontainerregistry.azurecr.io/logs:v3
+          image: nirmalazurecr.azurecr.io/logs
           ports:
             - containerPort: 3000
             - containerPort: 8082
           resources:
             requests:
               cpu: "100m"
+              memory: "128Mi"
             limits:
-              cpu: "700m"
+              cpu: "200m"
+              memory: "640Mi"
 
           envFrom:
             - configMapRef:
@@ -75,6 +75,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: logs-deployment
-  minReplicas: 10
-  maxReplicas: 15
+  minReplicas: 1
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 50

@@ -19,7 +19,7 @@ metadata:
   labels:
     app: notifications
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: notifications
@@ -30,14 +30,17 @@ spec:
     spec:
       containers:
         - name: notifications
-          image: nazurecontainerregistry.azurecr.io/notifications:v3
+          image: nirmalazurecr.azurecr.io/notifications
           ports:
             - containerPort: 3000
+            - containerPort: 8082
           resources:
             requests:
               cpu: "100m"
+              memory: "128Mi"
             limits:
-              cpu: "1000m"
+              cpu: "170m"
+              memory: "640Mi"
           envFrom:
             - configMapRef:
                 name: notifications-config
@@ -56,6 +59,10 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 3000
+    - name: grpc
+      protocol: TCP
+      port: 8082
+      targetPort: 8082
 
 ---
 apiVersion: autoscaling/v1
@@ -67,6 +74,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: notifications-deployment
-  minReplicas: 10
-  maxReplicas: 15
+  minReplicas: 1
+  maxReplicas: 5
   targetCPUUtilizationPercentage: 50

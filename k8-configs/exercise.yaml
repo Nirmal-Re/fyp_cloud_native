@@ -18,7 +18,7 @@ metadata:
   labels:
     app: exercise
 spec:
-  replicas: 10
+  replicas: 1
   selector:
     matchLabels:
       app: exercise
@@ -29,15 +29,16 @@ spec:
     spec:
       containers:
         - name: exercise
-          image: nazurecontainerregistry.azurecr.io/exercise:v3
+          image: nirmalazurecr.azurecr.io/exercise
           ports:
             - containerPort: 3000
-            - containerPort: 8082
           resources:
             requests:
               cpu: "100m"
+              memory: "128Mi"
             limits:
-              cpu: "700m"
+              cpu: "200m"
+              memory: "640Mi"
           envFrom:
             - configMapRef:
                 name: exercise-config
@@ -57,10 +58,6 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 3000
-    - name: grpc
-      protocol: TCP
-      port: 8082
-      targetPort: 8082
 
 ---
 apiVersion: autoscaling/v1
@@ -72,6 +69,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: exercise-deployment
-  minReplicas: 10
-  maxReplicas: 15
+  minReplicas: 1
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 50
