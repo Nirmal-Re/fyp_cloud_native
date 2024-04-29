@@ -18,7 +18,7 @@ metadata:
   labels:
     app: logs
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: logs
@@ -75,6 +75,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: logs-deployment
-  minReplicas: 1
+  minReplicas: 5
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50

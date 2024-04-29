@@ -18,7 +18,7 @@ metadata:
   labels:
     app: exercise
 spec:
-  replicas: 1
+  replicas: 5
   selector:
     matchLabels:
       app: exercise
@@ -69,6 +69,6 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: exercise-deployment
-  minReplicas: 1
+  minReplicas: 5
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50
